@@ -1,16 +1,16 @@
-import CSS from "./calculator.css?inline"; //⚠️ WARNING ONLY VITE
-const calculatorCSS = new CSSStyleSheet();
-calculatorCSS.replaceSync(CSS);
+import CSS from "./display.css?inline"; //⚠️ WARNING ONLY VITE
+const displayCSS = new CSSStyleSheet();
+displayCSS.replaceSync(CSS);
 
-import calculatorTemplate from "./calculatorTemplate.js";
+import displayTemplate from "./displayTemplate.js";
 
 /**
- * Calculator - Web Component customizado
+ * Display - Web Component customizado
  *
  * Um componente web reutilizável que encapsula lógica, estrutura e estilos
  * utilizando Shadow DOM para isolamento de estilo.
  *
- * @class Calculator
+ * @class Display
  * @extends {HTMLElement}
  *
  * @example
@@ -24,9 +24,9 @@ import calculatorTemplate from "./calculatorTemplate.js";
  *
  * @property {string} data-attr - Atributo observado que controla o comportamento do componente
  */
-class Calculator extends HTMLElement {
+class Display extends HTMLElement {
     /**
-     * Construtor do Calculator
+     * Construtor do Display
      *
      * Inicializa o Shadow DOM em modo 'open', aplica os estilos encapsulados
      * e insere o template HTML.
@@ -34,8 +34,8 @@ class Calculator extends HTMLElement {
     constructor() {
         super();
         const shadowRoot = this.attachShadow({ mode: "open" });
-        shadowRoot.adoptedStyleSheets.push(calculatorCSS);
-        shadowRoot.appendChild(calculatorTemplate.content.cloneNode(true));
+        shadowRoot.adoptedStyleSheets.push(displayCSS);
+        shadowRoot.appendChild(displayTemplate.content.cloneNode(true));
     }
 
     /**
@@ -58,10 +58,10 @@ class Calculator extends HTMLElement {
      * - Fazer requisições HTTP
      * - Executar lógica que depende do componente estar no DOM
      *
-     * @memberof Calculator
+     * @memberof Display
      */
     connectedCallback() {
-        console.log("Calculator added to the DOM.");
+        console.log("Display added to the DOM.");
     }
 
     /**
@@ -72,10 +72,10 @@ class Calculator extends HTMLElement {
      * - Limpar timers/intervals
      * - Liberar recursos
      *
-     * @memberof Calculator
+     * @memberof Display
      */
     disconnectedCallback() {
-        console.log("Calculator removed from the DOM.");
+        console.log("Display removed from the DOM.");
     }
 
     /**
@@ -83,16 +83,16 @@ class Calculator extends HTMLElement {
      *
      * Pode ser útil para sincronizar estado com o novo documento
      *
-     * @memberof Calculator
+     * @memberof Display
      */
     adoptedCallback() {
-        console.log("Calculator moved to a new document.");
+        console.log("Display moved to a new document.");
     }
 
     /**
      * Callback disparado quando um atributo observado é alterado
      *
-     * @memberof Calculator
+     * @memberof Display
      * @param {string} name - Nome do atributo alterado
      * @param {string|null} oldValue - Valor anterior do atributo
      * @param {string|null} newValue - Novo valor do atributo
@@ -101,5 +101,5 @@ class Calculator extends HTMLElement {
         console.log(`Attribute: ${name} changed from ${oldValue} to ${newValue}`);
     }
 }
-customElements.define("wc-calculator", Calculator);
-export { Calculator };
+customElements.define("wc-display", Display);
+export { Display };

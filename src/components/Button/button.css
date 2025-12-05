@@ -1,0 +1,30 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:host {
+    color-scheme: light dark;
+    background-color: #242424;
+    font-synthesis: none;
+}
+
+h1 {
+    color: aqua;
+}
+
+button {
+    color: brown;
+    cursor: pointer;
+}
+
+/* 
+<div class="base-button"><button type="button"></button></div>
+
+*/
