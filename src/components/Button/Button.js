@@ -5,23 +5,17 @@ buttonCSS.replaceSync(CSS);
 import buttonTemplate from "./buttonTemplate.js";
 
 /**
- * Button - Web Component customizado
- *
- * Um componente web reutilizável que encapsula lógica, estrutura e estilos
- * utilizando Shadow DOM para isolamento de estilo.
- *
+ * Button - Web Component que dispara custom event ao clique
  * @class Button
  * @extends {HTMLElement}
- *
  * @example
- * Uso básico no HTML
- * <wc-button data-value="0" data-type="[number,operator]"></web-component>
- *
+ * <wc-button data-pressed="false" data-value="0" data-type="number"></wc-button>
  */
 class Button extends HTMLElement {
     #button = null;
     #value = null;
     #type = null;
+
     constructor() {
         super();
         const root = this.attachShadow({ mode: "open" });
@@ -33,61 +27,42 @@ class Button extends HTMLElement {
     }
 
     /**
-     * Callback disparado quando o componente é inserido no DOM
-     *
-     * Útil para:
-     * - Inicializar listeners de eventos
-     * - Fazer requisições HTTP
-     * - Executar lógica que depende do componente estar no DOM
-     *
-     * @memberof Button
+     * Configura o texto do botão e adiciona listener de clique
      */
     connectedCallback() {
         this.#button.innerText = this.#value;
-        this.listener();
-        console.log("Button added to the DOM.");
+        this.#button.addEventListener("click", this);
     }
 
     /**
-     * Callback disparado quando o componente é removido do DOM
-     *
-     * Útil para:
-     * - Remover listeners de eventos
-     * - Limpar timers/intervals
-     * - Liberar recursos
-     *
-     * @memberof Button
+     * Remove o listener de clique ao remover o componente do DOM
      */
     disconnectedCallback() {
-        console.log("Button removed from the DOM.");
+        this.#button.removeEventListener("click", this);
     }
 
     /**
-     * Callback disparado quando o componente é movido para um novo documento
-     *
-     * Pode ser útil para sincronizar estado com o novo documento
-     *
-     * @memberof Button
+     * Re-adiciona listener ao mover para novo documento
      */
     adoptedCallback() {
-        console.log("Button moved to a new document.");
+        this.#button.addEventListener("click", this);
     }
 
     /**
-     * Callback disparado quando um atributo observado é alterado
-     *
-     * @memberof Button
-     * @param {string} name - Nome do atributo alterado
-     * @param {string|null} oldValue - Valor anterior do atributo
-     * @param {string|null} newValue - Novo valor do atributo
+     * Protocolo handleEvent - chamado automaticamente pelo navegador
+     * @param {Event} event - Evento nativo do navegador
      */
-    attributeChangedCallback(name, oldValue, newValue) {
-        console.log(`Attribute: ${name} changed from ${oldValue} to ${newValue}`);
+    handleEvent(event) {
+        const events = {
+            click: this.handleClick(event),
+        };
+        events[event.type];
     }
 
+    /**
+     * Dispara custom event com valor e tipo do botão
+     */
     handleClick() {
-        console.log(this);
-
         const customEvent = new CustomEvent("button-click", {
             detail: {
                 value: this.#value,
@@ -98,10 +73,7 @@ class Button extends HTMLElement {
         });
         this.dispatchEvent(customEvent);
     }
-
-    listener() {
-        this.addEventListener("click", this.handleClick);
-    }
 }
+
 customElements.define("wc-button", Button);
 export { Button };

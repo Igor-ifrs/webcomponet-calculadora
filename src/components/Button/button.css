@@ -10,21 +10,34 @@
 }
 
 :host {
-    color-scheme: light dark;
-    background-color: #242424;
+    background: #e00a0a;
     font-synthesis: none;
+    border: 1px solid orange;
+    display: block;
+    transition: all 200ms ease-in;
+
 }
 
-h1 {
-    color: aqua;
+:host(.pressed) {
+    opacity: .5;
+    border: 10px solid pink;
+}
+
+.base-button {
+    border: 1px solid pink;
 }
 
 button {
-    color: brown;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
+    background: none;
 }
 
 /* 
-<div class="base-button"><button type="button"></button></div>
+ <div class="base-button"><button type="button">#</button></div>
+ color-scheme: light dark;
 
 */

@@ -5,100 +5,69 @@ calculatorCSS.replaceSync(CSS);
 import calculatorTemplate from "./calculatorTemplate.js";
 
 /**
- * Calculator - Web Component customizado
- *
- * Um componente web reutilizável que encapsula lógica, estrutura e estilos
- * utilizando Shadow DOM para isolamento de estilo.
- *
+ * Calculator - Web Component que gerencia cálculos
  * @class Calculator
  * @extends {HTMLElement}
- *
- * @example
- * // Uso básico no HTML
- * <web-component data-attr="value"></web-component>
- *
- * // Uso com JavaScript
- * const component = document.createElement('web-component');
- * component.setAttribute('data-attr', 'value');
- * document.body.appendChild(component);
- *
- * @property {string} data-attr - Atributo observado que controla o comportamento do componente
  */
 class Calculator extends HTMLElement {
-    /**
-     * Construtor do Calculator
-     *
-     * Inicializa o Shadow DOM em modo 'open', aplica os estilos encapsulados
-     * e insere o template HTML.
-     */
+    #keyboard = null;
+    #display = null;
     constructor() {
         super();
-        const shadowRoot = this.attachShadow({ mode: "open" });
-        shadowRoot.adoptedStyleSheets.push(calculatorCSS);
-        shadowRoot.appendChild(calculatorTemplate.content.cloneNode(true));
+        const root = this.attachShadow({ mode: "open" });
+        root.adoptedStyleSheets.push(calculatorCSS);
+        root.appendChild(calculatorTemplate.content.cloneNode(true));
+        this.#keyboard = root.querySelector(".keyboard");
+        this.#display = root.querySelector("wc-display");
     }
 
     /**
-     * Lista de atributos que o componente deve observar
-     *
-     * Qualquer mudança nesses atributos dispara o método attributeChangedCallback
-     *
-     * @static
-     * @returns {string[]} Array com os nomes dos atributos observados
-     */
-    static get observedAttributes() {
-        return ["data-attr"];
-    }
-
-    /**
-     * Callback disparado quando o componente é inserido no DOM
-     *
-     * Útil para:
-     * - Inicializar listeners de eventos
-     * - Fazer requisições HTTP
-     * - Executar lógica que depende do componente estar no DOM
-     *
-     * @memberof Calculator
+     * Inicializa os listeners de eventos
      */
     connectedCallback() {
-        console.log("Calculator added to the DOM.");
+        this.listeners();
     }
 
     /**
-     * Callback disparado quando o componente é removido do DOM
-     *
-     * Útil para:
-     * - Remover listeners de eventos
-     * - Limpar timers/intervals
-     * - Liberar recursos
-     *
-     * @memberof Calculator
+     * Remove listeners ao desmontar
      */
     disconnectedCallback() {
-        console.log("Calculator removed from the DOM.");
+        this.removeEventListener("button-click", this.onButtonClick);
+        document.removeEventListener("keydown", this.onKeyDown);
     }
 
     /**
-     * Callback disparado quando o componente é movido para um novo documento
-     *
-     * Pode ser útil para sincronizar estado com o novo documento
-     *
-     * @memberof Calculator
+     * Re-adiciona listeners ao mover para novo documento
      */
     adoptedCallback() {
-        console.log("Calculator moved to a new document.");
+        this.listeners();
     }
 
     /**
-     * Callback disparado quando um atributo observado é alterado
-     *
-     * @memberof Calculator
-     * @param {string} name - Nome do atributo alterado
-     * @param {string|null} oldValue - Valor anterior do atributo
-     * @param {string|null} newValue - Novo valor do atributo
+     * Captura custom event "button-click" e exibe valor no console
      */
-    attributeChangedCallback(name, oldValue, newValue) {
-        console.log(`Attribute: ${name} changed from ${oldValue} to ${newValue}`);
+    onButtonClick = (event) => {
+        console.log("Button clicado:", event.detail);
+    };
+
+    /**
+     * Captura tecla pressionada e exibe no console
+     */
+    onKeyDown = (event) => {
+        console.log("Tecla pressionada:", event.key);
+    };
+
+    handleClick({ target }) {
+        target.classList.add("pressed");
+        setTimeout(() => {
+            target.classList.remove("pressed");
+        }, 500);
+    }
+
+    listeners() {
+        this.addEventListener("button-click", this.onButtonClick);
+        document.addEventListener("keydown", this.onKeyDown);
+        this.#keyboard.addEventListener("click", this.handleClick);
     }
 }
 customElements.define("wc-calculator", Calculator);

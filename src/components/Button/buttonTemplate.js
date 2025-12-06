@@ -2,9 +2,5 @@
  * @type {HTMLTemplateElement}
  */
 const buttonTemplate = document.createElement("template");
-buttonTemplate.innerHTML = /* html */ `
-    <div class="base-button">
-        <button type="button">#</button>
-    </div>
-`;
+buttonTemplate.innerHTML = /* html */ `<button type="button">#</button>`;
 export default buttonTemplate;
