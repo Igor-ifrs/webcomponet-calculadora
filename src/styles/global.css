@@ -4,31 +4,31 @@
   box-sizing: border-box;
 }
 
-
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: monospace;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+html {
+  height: 100dvh;
+  width: 100%;
+}
 
-
+body,
+#app {
+  height: 100%;
+  width: 100%;
+}
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  border: 1px solid lime;
+  outline: 1px solid red;
 }
 
 

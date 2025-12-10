@@ -10,11 +10,34 @@
 }
 
 :host {
-    color-scheme: light dark;
-    background-color: #242424;
-    font-synthesis: none;
+    border: 1px solid red;
+    outline: 1px solid green;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 80px 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "display"
+        "keyboard";
 }
 
-h1 {
-    color: aqua;
+.display,
+wc-keyboard {
+    border: 2px dotted greenyellow;
+}
+
+.display_container {
+    grid-area: display;
+}
+
+.display_value {
+    font-size: 3rem;
+    color: lime;
+}
+
+wc-keyboard {
+    grid-area: keyboard;
 }
