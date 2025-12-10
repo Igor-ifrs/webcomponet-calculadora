@@ -16,7 +16,7 @@
     border: 2px solid lime;
 }
 
-.keyboard_conteiner {
+.keyboard_container {
     display: grid;
     grid-template-columns: repeat(5fr);
     grid-template-rows: repeat(4fr);
